@@ -20,6 +20,6 @@ OnLoad run M truth-test (callback) and if it fails display N page; otherwise sta
 When M page is loaded, grab N api results, render O handlebars template, inject it into P in the DOM, 
 and call Q callback for any further custom processing
 
-# Page Unload Handlers
+## Page Unload Handlers
 
 When M page is unloaded, run N callback for any tear-down (DOM cleanup) you might want to do
