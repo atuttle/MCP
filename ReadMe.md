@@ -1,4 +1,6 @@
-# MasterMind
+# MCP (Master Control Program)
+
+This little gem is the baseline with which we start all of our PhoneGap apps. Lots more information to come...
 
 * Assumes jQuery Mobile for page rendering and navigation.
 * Assumes HandlebarsJS for templating.
