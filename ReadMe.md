@@ -2,8 +2,13 @@
 
 * Assumes jQuery Mobile for page rendering and navigation.
 * Assumes HandlebarsJS for templating.
+* Includes Lawnchair for data caching.
 
 _All features are optional_
+
+## Local Caching of api results
+
+Optionally store api results locally. Or don't, and just hit the API every time the page is loaded.
 
 ## Queue and queue processors
 
