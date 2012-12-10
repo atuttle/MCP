@@ -12,10 +12,12 @@ _All features are optional_
 
 ## Create an instance
 
-	var myApp = new MCP({
-		apiBaseURL: 'http://domain.com/path/to/api/base'
-		, loadFromCache: ['key1', 'key2', 'key3']
-	});
+```js
+var myApp = new MCP({
+	apiBaseURL: 'http://domain.com/path/to/api/base'
+	, loadFromCache: ['key1', 'key2', 'key3']
+});
+```
 
 Items listed in `loadFromCache` will be pulled from localStorage if they exist there; allowing your data 
 to persist across application runs. Any cached api results (as described below) are automatically included
@@ -26,32 +28,34 @@ in this list.
 Useful for making sure that data you're capturing is NEVER lost. Queue items are persisted in localStorage until 
 you remove them from the queue.
 
-	myApp.clickTrackingQueue = new MCP.queue({
-		//timer frequency in milliseconds
-		frequency: 5000 // <~ 5 seconds
+```js
+myApp.clickTrackingQueue = new MCP.queue({
+	//timer frequency in milliseconds
+	frequency: 5000 // <~ 5 seconds
 
-		//automatically enable+disable on appropriate phonegap events to conserve battery and
-		//try to make use of network if/when it comes online
-		, phonegapEvents: true
+	//automatically enable+disable on appropriate phonegap events to conserve battery and
+	//try to make use of network if/when it comes online
+	, phonegapEvents: true
 
-		//you write a function to handle a queue item
-		, handler: function(queueItem){
-			//do what you need to do with the item
-			//...
+	//you write a function to handle a queue item
+	, handler: function(queueItem){
+		//do what you need to do with the item
+		//...
 
-			//remove it from the queue on success
-			myApp.clickTrackingQueue.shift();
-		}
-	});
-	
-	//manually start the interval
-	myApp.clickTrackingQueue.start();
-	
-	//manually stop the interval
-	myApp.clickTrackingQueue.stop();
-	
-	//add data to the queue (your handler is passed one queue item at a time)
-	myApp.clickTrackingQueue.push({data: 'foo'});
+		//remove it from the queue on success
+		myApp.clickTrackingQueue.shift();
+	}
+});
+
+//manually start the interval
+myApp.clickTrackingQueue.start();
+
+//manually stop the interval
+myApp.clickTrackingQueue.stop();
+
+//add data to the queue (your handler is passed one queue item at a time)
+myApp.clickTrackingQueue.push({data: 'foo'});
+```
 
 Unless there is an error in your queue handler function, the handler will be called again immediately for 
 the next item in the queue until the queue is emptied.
@@ -60,48 +64,52 @@ the next item in the queue until the queue is emptied.
 
 Useful for requiring login/etc.
 
-	myApp.onStart({
-		truthTest: function(){}
-		pass: function(){}
-		fail: function(){}
-	});
+```js
+myApp.onStart({
+	truthTest: function(){}
+	pass: function(){}
+	fail: function(){}
+});
+```
 
 ## Simply associate a page with an API request
 
 When M page is loaded, grab N api results, render O handlebars template, inject it into P in the DOM, 
 and call Q callback for any further custom processing
 
-	myApp.onPage({
-		
-		//jquery selector for the page you're hooking up to
-		page: '#somePage'
-		
-		//this is appended to the api base url defined at instance creation
-		, get: '/someResource.json'
-		
-		//data included in the request
-		, getdata: {
-			key: 'value'
-		}
+```js
+myApp.onPage({
+	
+	//jquery selector for the page you're hooking up to
+	page: '#somePage'
+	
+	//this is appended to the api base url defined at instance creation
+	, get: '/someResource.json'
+	
+	//data included in the request
+	, getdata: {
+		key: 'value'
+	}
 
-		//client-side cache duration (in seconds) for the response
-		, cacheDuration: 60 * 3 // <~ 3 minutes
-		
-		//jquery ajax error callback
-		, apiError: function(jqXHR, textStatus, errorThrown){}
+	//client-side cache duration (in seconds) for the response
+	, cacheDuration: 60 * 3 // <~ 3 minutes
+	
+	//jquery ajax error callback
+	, apiError: function(jqXHR, textStatus, errorThrown){}
 
-		//handlebars template selector
-		, renders: '#someTemplate'
+	//handlebars template selector
+	, renders: '#someTemplate'
 
-		//container in the page in which the rendered handlebars template content is injected
-		, container: '#someContent'
+	//container in the page in which the rendered handlebars template content is injected
+	, container: '#someContent'
 
-		//callback in which you can run more custom code after everything is loaded and displayed
-		, onComplete: function(options, data){}
+	//callback in which you can run more custom code after everything is loaded and displayed
+	, onComplete: function(options, data){}
 
-		//callback in which you can run cleanup after the page is removed
-		, onTeardown: function(page){}
-	});
+	//callback in which you can run cleanup after the page is removed
+	, onTeardown: function(page){}
+});
+```
 
 ### Local Caching of api results
 
