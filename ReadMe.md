@@ -1,5 +1,7 @@
 # MCP (Master Control Program)
 
+![MCP from TRON](https://raw.github.com/CounterMarch/MCP/gh-pages/MCP.png)
+
 This little gem is the baseline with which we start all of our PhoneGap apps. Lots more information to come...
 
 * Assumes jQuery Mobile for page rendering and navigation. (Not included)
