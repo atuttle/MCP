@@ -16,6 +16,9 @@ _All features are optional_
 var myApp = new MCP({
 	apiBaseURL: 'http://domain.com/path/to/api/base'
 	, loadFromCache: ['key1', 'key2', 'key3']
+	, ready: function(){
+		//do stuff after data is loaded from cache
+	}
 });
 ```
 
@@ -23,10 +26,13 @@ Items listed in `loadFromCache` will be pulled from localStorage if they exist t
 to persist across application runs. Any cached api results (as described below) are automatically included
 in this list.
 
-## Queue and queue processors
+## Queueing for important network requests
 
-Useful for making sure that data you're capturing is NEVER lost. Queue items are persisted in localStorage until 
-you remove them from the queue.
+Network connections are finnicky. You can't always count on them being available when you need them. You should 
+queue important network transactions and retry when network becomes available, after the app is unpaused, etc.
+The MCP queue structure helps accomplish that.
+
+Queue items are persisted in localStorage until you remove them from the queue.
 
 ```js
 myApp.clickTrackingQueue = new MCP.queue({
@@ -60,17 +66,26 @@ myApp.clickTrackingQueue.push({data: 'foo'});
 Unless there is an error in your queue handler function, the handler will be called again immediately for 
 the next item in the queue until the queue is emptied.
 
-## OnLoad State Checker
 
-Useful for requiring login/etc.
-
-```js
-myApp.onStart({
-	truthTest: function(){}
-	pass: function(){}
-	fail: function(){}
-});
-```
+>**Considering removing this; `loadFromCache` above kind of makes it redundant for our use cases.**
+>
+>## OnLoad State Checker
+>
+>Useful for requiring login/etc.
+>
+>```js
+>myApp.onStart({
+>	truthTest: function(){
+>		return typeof(localStorage.getItem('userEmail')) !== 'undefined';
+>	}
+>	pass: function(){
+>		myApp.userEmail = localStorage.getItem('userEmail');
+>	}
+>	fail: function(){
+>		$.mobile.changePage('#login');
+>	}
+>});
+>```
 
 ## Simply associate a page with an API request
 
