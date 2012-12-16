@@ -37,8 +37,8 @@ var MCP = function(options){
 			if (this.state === 'disabled') return;
 
 			//was running but queue now empty
-			if (this.state === 'processing' && this.items.length === 0){
-				this.state = 'disabled';
+			if (this.items.length === 0){
+				this.stop();
 				return;
 			}
 
