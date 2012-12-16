@@ -91,7 +91,14 @@ describe("queue", function(){
 	});
 
 	it("calls custom handler", function(){
-
+		var called = false;
+		var handler = function(){
+			called = true;
+		};
+		q.push(1);
+		q.options.handler = handler;
+		q.start(true);
+		expect(called).toBe(true);
 	});
 
 });
