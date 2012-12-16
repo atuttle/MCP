@@ -66,11 +66,14 @@ var MCP = function(options){
 			});
 		};
 
-		newQueue.start = function(){
+		newQueue.start = function(immediate){
+			immediate = immediate || true;
 			if (this.state === 'processing') return;
 			if (this.state === 'enabled') return;
 			this.state = 'enabled';
-			var go = function(){ $tick.apply(this); };
+			var that = this;
+			var go = function(){ $tick.apply(that); };
+			if (immediate) go();
 			this.clock = setInterval(go, this.options.frequency);
 		};
 		newQueue.stop = function(){
