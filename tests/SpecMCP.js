@@ -17,7 +17,7 @@ describe("MCP Initializer", function(){
 	});
 
 	it("defaults ready to a function", function(){
-		expect(typeof(bare.options.ready)).toBe("function");
+		expect(typeof bare.options.ready).toBe("function");
 	});
 
 	it("calls the ready function at some point", function(){
