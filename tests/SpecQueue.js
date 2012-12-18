@@ -96,13 +96,30 @@ describe("queue", function(){
 
 	it("calls custom handler", function(){
 		var called = false;
-		var handler = function(){
+		var handler = function(item, cb){
 			called = true;
+			cb(true);
 		};
 		q.push(1);
 		q.options.handler = handler;
 		q.start(true);
-		expect(called).toBe(true);
+		waitsFor(function(){
+			return called === true;
+		}, "called set to true", 25);
+		waitsFor(function(){
+			return q.items.length === 0;
+		}, "Queue to empty", 1);
+	});
+
+	it("stops when stop() is called", function(){
+		var i = 1000;
+		while(--i) q.push(1);
+		q.options.handler = function(item, cb){
+			cb(true);
+		};
+		q.start();
+		q.stop();
+		expect(q.items.length).toBeGreaterThan(0);
 	});
 
 });

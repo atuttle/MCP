@@ -49,16 +49,17 @@ var MCP = function(options){
 			this.state = 'processing';
 
 			var item = this.items[0];
+			var self = this;
 			this.options.handler(item, function(result){
 				result = result || false;
 				if (result){
-					this.shift();
-					next(true);
+					self.shift();
+					next.call(self, true);
 					return;
 				}else{
-					if (this.options.rotateOnFail){
-						if (this.items.length === 1) return;
-						this.push(this.shift());
+					if (self.options.rotateOnFail){
+						if (self.items.length === 1) return;
+						self.push(self.shift());
 						next(true);
 					}
 					return;
@@ -71,9 +72,9 @@ var MCP = function(options){
 			if (this.state === 'processing') return;
 			if (this.state === 'enabled') return;
 			this.state = 'enabled';
-			var that = this;
-			var go = function(){ $tick.apply(that); };
-			if (immediate) go();
+			var self = this;
+			var go = function(){ $tick.apply(self); };
+			if (immediate) setTimeout(go, 0);
 			this.clock = setInterval(go, this.options.frequency);
 		};
 		newQueue.stop = function(){
