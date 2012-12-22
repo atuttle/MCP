@@ -71,26 +71,6 @@ Unless there is an error in your queue handler function, the handler will be cal
 the next item in the queue until the queue is emptied.
 
 
->**Considering removing this; `loadFromCache` above kind of makes it redundant for our use cases.**
->
->## OnLoad State Checker
->
->Useful for requiring login/etc.
->
->```js
->myApp.onStart({
->	truthTest: function(){
->		return typeof(localStorage.getItem('userEmail')) !== 'undefined';
->	}
->	pass: function(){
->		myApp.userEmail = localStorage.getItem('userEmail');
->	}
->	fail: function(){
->		$.mobile.changePage('#login');
->	}
->});
->```
-
 ## Simply associate a page with an API request
 
 When M page is loaded, grab N api results, render O handlebars template, inject it into P in the DOM, 
