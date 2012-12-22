@@ -29,4 +29,26 @@ describe("MCP Initializer", function(){
 		expect(called).toEqual(true);
 	});
 
+	it("loads the requested keys from localStorage, passing them ordinally to the ready function", function(){
+		var found = null, 
+			notFound = false, 
+			called = false;
+		var ready = function(a, b){
+			found = a;
+			notFound = b;
+			called = true;
+		};
+		localStorage.clear();
+		localStorage.setItem('found', true);
+		app = new MCP({
+			loadFromCache: ['found','notFound']
+			, ready: ready
+		});
+		waitsFor(function(){
+			return called === true;
+		}, "called ready", 500);
+		expect(found).toBe(true);
+		expect(notFound).toBe(null);
+	});
+
 });

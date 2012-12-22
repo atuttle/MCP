@@ -16,7 +16,10 @@ _All features are optional_
 var myApp = new MCP({
 	apiBaseURL: 'http://domain.com/path/to/api/base'
 	, loadFromCache: ['key1', 'key2', 'key3']
-	, ready: function(){
+	, ready: function(key1, key2, key3){
+		//arguments to this function will be passed ordinally (by position), not by name
+		//this should only matter to you if you plan to reference the `arguments` object
+
 		//do stuff after data is loaded from cache
 	}
 });

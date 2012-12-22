@@ -117,8 +117,15 @@ var MCP = function(options){
 	
 	this.page = function(options){};
 
+
+	//load requested keys from cache
+	var cacheValues = [];
+	for (var key in this.options.loadFromCache){
+		cacheValues.push(JSON.parse(localStorage.getItem(this.options.loadFromCache[key])) || null);
+	}
+
 	//call ready function
-	this.options.ready();
+	this.options.ready.apply(this, cacheValues);
 
 	console && console.log('Acknowledge.');
 };
