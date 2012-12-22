@@ -41,7 +41,8 @@ myApp.clickTrackingQueue = new MCP.queue({
 
 	//automatically enable+disable on appropriate phonegap events to conserve battery and
 	//try to make use of network if/when it comes online
-	, phonegapEvents: true
+	//supported events: pause, resume, online, offline
+	, phonegapEvents: 'pause,resume,online,offline'
 
 	//you write a function to handle a queue item
 	, handler: function(queueItem){

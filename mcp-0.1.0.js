@@ -28,6 +28,20 @@ var MCP = function(options){
 		newQueue.options.handler = options.handler || function(item){ console.log(item); };
 		newQueue.options.rotateOnFail = options.rotateOnFail || false;
 
+		//handle phonegap events
+		if(newQueue.options.phonegapEvents){
+			var e = newQueue.options.phonegapEvents.toLowerCase();
+			$(document).on("deviceready", function(){
+				if (e.indexOf('pause')>=0) $(document).on("pause", newQueue.stop);
+				if (e.indexOf('offline')>=0) $(document).on("offline", newQueue.stop);
+				if (e.indexOf('resume')>=0) $(document).on("resume", newQueue.start);
+				if (e.indexOf('online')>=0) $(document).on("online", newQueue.start);
+			});
+		}
+
+		//for closure reference of the queue this/self object
+		var self = newQueue;
+
 		//internal handler that takes care of state-machine-esque behavior and 
 		//delegates to user handler for domain logic
 		var $tick = function next(recurse){
@@ -60,7 +74,7 @@ var MCP = function(options){
 					if (self.options.rotateOnFail){
 						if (self.items.length === 1) return;
 						self.push(self.shift());
-						next(true);
+						next.call(self, true);
 					}
 					return;
 				}
@@ -72,10 +86,9 @@ var MCP = function(options){
 			if (this.state === 'processing') return;
 			if (this.state === 'enabled') return;
 			this.state = 'enabled';
-			var self = this;
-			var go = function(){ $tick.apply(self); };
+			var go = function(){ $tick.apply(newQueue); };
 			if (immediate) setTimeout(go, 0);
-			this.clock = setInterval(go, this.options.frequency);
+			this.clock = setInterval(go, newQueue.options.frequency);
 		};
 		newQueue.stop = function(){
 			if (this.state === 'disabled') return;
