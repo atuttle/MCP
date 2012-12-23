@@ -115,7 +115,17 @@ var MCP = function(options){
 		return newQueue;
 	};
 	
-	this.page = function(options){};
+	this.onPage = function(options){
+		if (typeof options === 'undefined') throw "options argument is required";
+		if (typeof options.page === 'undefined') throw "page key of options argument is required";
+		if (typeof options.get === 'undefined') throw "get key of options argument is required";
+		if (typeof options.renders === 'undefined') throw "renders key of options argument is required";
+		if (typeof options.container === 'undefined') throw "container key of options argument is required";
+
+		$(options.page).on("pageshow", function(){
+
+		});
+	};
 
 
 	//load requested keys from cache
