@@ -110,6 +110,28 @@ myApp.onPage({
 });
 ```
 
+### API Base URL
+
+What is a "base url" and why split it from the rest of the API request url?
+
+The base url is the portion that's the same for every request. For example, `https://api.twitter.com/1.1`
+would be the base url for Twitter's v1.1 REST API. This split is made so that if the base needs to change
+--for example, you switch to the 1.2 api version-- then you only need to change it in one place.
+
+The rest of the API request URL would be considered the endpoint, URI, or something else, depending on with whom
+you're speaking. For example, `/statuses/retweets/:id.json` for retweets.
+
+When the api request is made for the given page, the string you supply as the `get` parameter to `.page()` is
+appended to the string you supplied for the `apiBaseUrl` parameter when creating your MCP instance.
+
+#### Multiple Bases
+
+If you need to access multiple APIs -- perhaps your own internal API for some pages, and the Twitter
+API for others -- enter a blank string for `apiBaseUrl` and the full API request url in each `.page()` definition.
+
+There's nothing stopping you from building something clever of your own to clean up api urls. It's not meant to be
+a perfect tool for every variation of the problem, just a decent-enough solution to the most common case.
+
 ### Local Caching of api results
 
 Optionally store api results locally. Or don't, and just hit the API every time the page is 
