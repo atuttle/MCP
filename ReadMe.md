@@ -121,13 +121,13 @@ would be the base url for Twitter's v1.1 REST API. This split is made so that if
 The rest of the API request URL would be considered the endpoint, URI, or something else, depending on with whom
 you're speaking. For example, `/statuses/retweets/:id.json` for retweets.
 
-When the api request is made for the given page, the string you supply as the `get` parameter to `.page()` is
+When the api request is made for the given page, the string you supply as the `get` parameter to `.onPage()` is
 appended to the string you supplied for the `apiBaseUrl` parameter when creating your MCP instance.
 
 #### Multiple Bases
 
 If you need to access multiple APIs -- perhaps your own internal API for some pages, and the Twitter
-API for others -- enter a blank string for `apiBaseUrl` and the full API request url in each `.page()` definition.
+API for others -- enter a blank string for `apiBaseUrl` and the full API request url in each `.onPage()` definition.
 
 There's nothing stopping you from building something clever of your own to clean up api urls. It's not meant to be
 a perfect tool for every variation of the problem, just a decent-enough solution to the most common case.
